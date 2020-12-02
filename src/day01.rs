@@ -49,13 +49,6 @@ fn rec_finc(num: i32, arr: Vec<i32>) -> Option<i32> {
 // Part 2
 // ____________________
 
-// pub fn day1_2() -> u32 {
-//     let value = read(File::open("src/input/day01.txt").unwrap()).unwrap();
-//     let res = find_x_with_n_value(value, 2020, 3);
-//     return res;
-// }
-
-
 fn recurse(arr: Vec<i32>, x: i32, n: i32) -> i32 {
     if arr.len() == 0 {
         return 0;

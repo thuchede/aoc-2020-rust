@@ -13,3 +13,7 @@ Last year I tried to solve as much as I could to learn about Golang and it was s
 - Rust does not seem to have tail call optimization
 - Option<T> is neat
 - Rust's built-in testing seems as nice as Go's
+
+### Day 2 
+- rust std regex crate does not support lookahead
+- simple loop might do the trick simpler than regex for this one

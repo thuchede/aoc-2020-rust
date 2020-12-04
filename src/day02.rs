@@ -94,6 +94,24 @@ fn test_line_new_policy((policy, password): (PasswordPolicy, String)) -> bool {
     return match_f_value ^ match_s_value
 }
 
+fn test_line_regex_new_policy_opt((policy, password): (PasswordPolicy, String)) -> Option<bool> {
+    let re = FRegex::new(format!(r#"((?!^.{{{}}}{})^.{{{}}}{})|((?!^.{{{}}}{})^.{{{}}}{})"#, policy.low-1, policy.letter, policy.high-1, policy.letter, policy.high-1, policy.letter, policy.low-1, policy.letter, ).as_str()).unwrap();
+    if let Ok(res) = re.is_match(&password) {
+        if res {
+            return Some(true);
+        } else {
+            return None;
+        }
+    } else {
+        return None;
+    }
+}
+
+fn count_valid_password_regex_new_policy(list: Vec<String>) -> usize {
+    let valid = list.iter().filter_map(|l| test_line_regex_new_policy_opt(parse(l.to_string()))).count();
+    return valid;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -180,6 +198,13 @@ mod tests {
     #[test]
     fn test_day2_2_result() {
         let result = day2_2();
+        assert_eq!(388, result);
+    }
+    
+    #[test]
+    fn test_day2_2_regex_result() {    
+        let value = read(File::open("src/input/day02.txt").unwrap()).unwrap();
+        let result = count_valid_password_regex_new_policy(value);
         assert_eq!(388, result);
     }
 }

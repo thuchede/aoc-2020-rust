@@ -45,7 +45,6 @@ fn count_valid_passport(list: Vec<String>) -> usize {
 // ____________________
 
 fn test_line_fopt_stronger(passport: String) -> Option<bool> {
-    // let re = FRegex::new(format!(r#"(?=.*iyr:((201\d)|2020))(?=.*hcl:(#[0-9a-f]{{6}}))(?=.*byr:((?:19[2-9]\d)|200[0-2]))(?=.*pid:(\d{{9}}))(?=.*ecl:(amb|blu|brn|gry|grn|hzl|oth))(?=.*byr:(19[2-9]\d|200[0-2]))(?=.*iyr:(201\d|2020))(?=.*eyr:(202\d|2030))(?=.*hgt:((?:(?:59|6\d|7[0-6])in)|(?:(?:1[5-8]\d|19[0-3])cm))).*"#).as_str()).unwrap();
     let re = FRegex::new(format!(r#"(?=.*iyr:((201\d)|2020)(?: |$))(?=.*hcl:(#[0-9a-f]{{6}})(?: |$))(?=.*byr:((?:19[2-9]\d)|200[0-2])(?: |$))(?=.*pid:(\d{{9}}(?:\s|$)))(?=.*ecl:(amb|blu|brn|gry|grn|hzl|oth)(?: |$))(?=.*eyr:(202\d|2030)(?: |$))(?=.*hgt:((?:(?:59|6\d|7[0-6])in)|(?:(?:1[5-8]\d|19[0-3])cm))(?: |$)).*"#).as_str()).unwrap();
     if let Ok(res) = re.is_match(&passport) {
         if res {

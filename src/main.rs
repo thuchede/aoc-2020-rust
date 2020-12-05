@@ -4,12 +4,13 @@ mod helpers;
 // mod day01;
 // mod day02;
 // mod day03;
-mod day04;
+// mod day04;
+mod day05;
 
 
 fn main() {
-    // println!("Day4 - 1 : {:?}", day04::day4_1());
-    println!("Day4 - 2 : {:?}", day04::day4_2());
+    println!("Day5 - 1 : {:?}", day05::day5_1());
+    println!("Day5 - 2 : {:?}", day05::day5_2());
 }
 
 #[cfg(test)]

@@ -5,8 +5,8 @@ mod day07;
 
 
 fn main() {
-    // println!("Day7 - 1 : {:?}", day07::day7_1());
-    println!("Day7 - 2 : {:?}", day07::day7_2());
+    println!("Day7 - 1 : {:?}", day07::day7_1());
+    // println!("Day7 - 2 : {:?}", day07::day7_2());
 }
 
 #[cfg(test)]

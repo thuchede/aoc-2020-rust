@@ -12,8 +12,9 @@ pub fn day7_1() -> usize {
     
     let mut hashmap: HashMap<String, Vec<String>> = HashMap::new(); 
 
+    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
     for rule in value.iter() {
-        str_to_hash_map(&mut hashmap, rule.to_string());
+        str_to_hash_map(&mut hashmap, rule.to_string(), &re);
     }
     
     let res = find_all_parent_to(&hashmap, String::from("shiny gold"));
@@ -26,8 +27,9 @@ fn day7_sample1() -> usize {
     
     let mut hashmap: HashMap<String, Vec<String>> = HashMap::new(); 
 
+    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
     for rule in value.iter() {
-        str_to_hash_map(&mut hashmap, rule.to_string());
+        str_to_hash_map(&mut hashmap, rule.to_string(), &re);
     }
     
     let res = find_all_parent_to(&hashmap, String::from("shiny gold"));
@@ -50,8 +52,7 @@ fn find_rec_all_parent_to(hashmap: &HashMap<String, Vec<String>>, input: String,
     }
 }
 
-fn str_to_hash_map(hashmap: &mut HashMap<String, Vec<String>>, input: String) {
-    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
+fn str_to_hash_map(hashmap: &mut HashMap<String, Vec<String>>, input: String, re: &Regex) {
     // let s = String::from("striped black bags contain 1 plaid salmon bag, 2 plaid beige bags, 4 dotted teal bags, 2 posh chartreuse bags.");
 
     let caps = re.captures(&input).unwrap();
@@ -111,8 +112,9 @@ pub fn day7_2() -> u32 {
 
     let mut hashmap: HashMap<String, Vec<(u32, String)>> = HashMap::new(); 
 
+    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
     for rule in value.iter() {
-        str_to_hash_map_part2(&mut hashmap, rule.to_string());
+        str_to_hash_map_part2(&mut hashmap, rule.to_string(), &re);
     }
 
     let res = find_all_child_in(&mut hashmap, String::from("shiny gold"));
@@ -125,8 +127,9 @@ fn day7_firstsample2() -> u32 {
 
     let mut hashmap: HashMap<String, Vec<(u32, String)>> = HashMap::new(); 
 
+    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
     for rule in value.iter() {
-        str_to_hash_map_part2(&mut hashmap, rule.to_string());
+        str_to_hash_map_part2(&mut hashmap, rule.to_string(), &re);
     }
 
     let res = find_all_child_in(&mut hashmap, String::from("shiny gold"));
@@ -139,8 +142,9 @@ fn day7_sample2() -> u32 {
 
     let mut hashmap: HashMap<String, Vec<(u32, String)>> = HashMap::new(); 
 
+    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
     for rule in value.iter() {
-        str_to_hash_map_part2(&mut hashmap, rule.to_string());
+        str_to_hash_map_part2(&mut hashmap, rule.to_string(), &re);
     }
 
     let res = find_all_child_in(&mut hashmap, String::from("shiny gold"));
@@ -150,9 +154,7 @@ fn day7_sample2() -> u32 {
 
 
 
-fn str_to_hash_map_part2(hashmap: &mut HashMap<String, Vec<(u32, String)>>, input: String) {
-    let re = Regex::new(r#"(\w+ \w+) bags contain (?:(?:(\d) (\w+ \w+)) bags?(?:, |\.)|(no other bags?))(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?(?:(?:(\d) (\w+ \w+)) bags?(?:, |\.))?"#).unwrap();
-
+fn str_to_hash_map_part2(hashmap: &mut HashMap<String, Vec<(u32, String)>>, input: String, re: &Regex) {
     let caps = re.captures(&input).unwrap();
     let edge = String::from(caps.get(1).unwrap().as_str());
     let mut vector: Vec<(u32, String)> = vec![];
@@ -209,7 +211,7 @@ mod tests {
 
     #[test]
     fn test_day7_1() {
-        assert_eq!(0, day7_1());
+        assert_eq!(265, day7_1());
     }
 
     #[test]
@@ -239,7 +241,7 @@ mod tests {
 
     #[test]
     fn test_day7_2() {
-        assert_eq!(0, day7_1());
+        assert_eq!(14177, day7_2());
     }
 
     #[test]

@@ -142,7 +142,7 @@ mod tests {
 
     #[test]
     fn test_day8_1() {
-        assert_eq!(0, day8_1());
+        assert_eq!(1137, day8_1());
     }
 
     #[test]

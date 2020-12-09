@@ -1,12 +1,12 @@
 extern crate regex;
 
 mod helpers;
-mod day08;
+mod day09;
 
 
 fn main() {
-    // println!("Day8 - 1 : {:?}", day08::day8_1());
-    println!("Day8 - 2 : {:?}", day08::day8_2());
+    // println!("Day9 - 1 : {:?}", day09::day9_1());
+    println!("Day9 - 2 : {:?}", day09::day9_2());
 }
 
 #[cfg(test)]

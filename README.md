@@ -45,3 +45,10 @@ Day7 - 1 : 265
 ```
 - `.clone()` everywhere might not be the best way, might be interesting to visualize the amount ou memory
 - beginning to get a handle on the difference between `T`, `&T` and `&mut T` :)
+### Day 8
+- implementing a enum struct to hold instruction was a good hindsight
+- really easy to implements needed trait afterwards
+- IntCode v2 incoming?
+### Day 9
+- (x..y) is nice to quickly generate a range (or getting a slice with [x..y])
+- small example worked fine for part 2 but stack overflow'd on puzzle input 

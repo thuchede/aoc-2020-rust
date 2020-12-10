@@ -52,3 +52,8 @@ Day7 - 1 : 265
 ### Day 9
 - (x..y) is nice to quickly generate a range (or getting a slice with [x..y])
 - small example worked fine for part 2 but stack overflow'd on puzzle input 
+### Day 10
+- Can't find the formula for picking out adapters combinaisons
+- looks like we should pick (n in m) but need to remove some x that wouldn't match a difference > 3
+- tried `2^(n-1)-2^(n-2)`, `2^(n-1)-2^(n-2)`
+- looks like `2^(n-1)-(2^(n-2) - 1)`

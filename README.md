@@ -55,5 +55,8 @@ Day7 - 1 : 265
 ### Day 10
 - Can't find the formula for picking out adapters combinaisons
 - looks like we should pick (n in m) but need to remove some x that wouldn't match a difference > 3
-- tried `2^(n-1)-2^(n-2)`, `2^(n-1)-2^(n-2)`
-- looks like `2^(n-1)-(2^(n-2) - 1)`
+- => `2^(n-1)-max(2^(n-3)-1, 0)` (also cf. tribonacci sequence)
+### Day 11
+- cost of `clone()` ?
+### Day 12
+- can't extends struct, you either use composition, redeclare another struct or add optional field to base struct

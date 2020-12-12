@@ -58,5 +58,8 @@ Day7 - 1 : 265
 - => `2^(n-1)-max(2^(n-3)-1, 0)` (also cf. tribonacci sequence)
 ### Day 11
 - cost of `clone()` ?
+- turns out by passing ref instead of cloning time goes down
+- pre optim : p1 ~49sec p2 ~36sec
+- post optim : p1 ~1sec p2 ~2sec
 ### Day 12
 - can't extends struct, you either use composition, redeclare another struct or add optional field to base struct

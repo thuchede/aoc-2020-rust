@@ -1,16 +1,17 @@
 extern crate regex;
 use std::time::{Duration, Instant};
 mod helpers;
-mod day12;
+// mod day12;
+mod day11;
 
 
 fn main() {
     let now = Instant::now();
-    println!("Day12 - 1 : {:?}", day12::day12_1());
+    println!("Day11 - 1 : {:?}", day11::day11_1());
     println!("{}", now.elapsed().as_millis());
 
     let now2 = Instant::now();
-    println!("Day12 - 2 : {:?}", day12::day12_2());
+    println!("Day11 - 2 : {:?}", day11::day11_2());
     println!("{}", now2.elapsed().as_millis());
 }
 

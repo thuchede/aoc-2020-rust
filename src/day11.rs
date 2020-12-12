@@ -15,25 +15,25 @@ fn run_part_1_for_file(path: String) -> u64 {
     let value = helpers::read(File::open(path).unwrap()).unwrap();
     let seats: Vec<Vec<char>> = value.iter().map(|l| l.chars().collect()).collect();
 
-    let mut opt_next_seats = has_new_seats(seats);
+    let mut opt_next_seats = has_new_seats(&seats);
     let mut res = 0;
     while let Some(next_seats) = opt_next_seats {
-        res = count_seats(next_seats.clone());
-        opt_next_seats = has_new_seats(next_seats);
+        res = count_seats(&next_seats);
+        opt_next_seats = has_new_seats(&next_seats);
     }
 
     res
 }
 
-fn count_seats(seats: Vec<Vec<char>>) -> u64 {
+fn count_seats(seats: &Vec<Vec<char>>) -> u64 {
     seats.iter().flatten().fold(0, |acc, e| if *e == '#' { acc+1 } else { acc } )
 }
 
-fn has_new_seats(seats: Vec<Vec<char>>) -> Option<Vec<Vec<char>>> /*(Vec<Vec<char>>, bool)*/ {
+fn has_new_seats(seats: &Vec<Vec<char>>) -> Option<Vec<Vec<char>>> /*(Vec<Vec<char>>, bool)*/ {
     let mut changed = false;
     let mut new_seats = seats.clone();
     seats.clone().iter().enumerate().for_each(|(i, row)| row.iter().enumerate().for_each(|(j, col)| {
-        let next = get_next_seat(*col, adjacent_occupied_seat(seats.clone(), i, j));
+        let next = get_next_seat(*col, adjacent_occupied_seat(seats, i, j));
         if next != *col {
             changed = true;
         }
@@ -56,7 +56,7 @@ fn get_next_seat(seat: char, adjacent_occupied_seat: usize) -> char {
     }
 }
 
-fn adjacent_occupied_seat(room: Vec<Vec<char>>, x: usize, y: usize) -> usize {
+fn adjacent_occupied_seat(room: &Vec<Vec<char>>, x: usize, y: usize) -> usize {
     let min_x = if x == 0 { 0 } else { x-1 };
     let min_y = if y == 0 { 0 } else { y-1 };
     let max_x = cmp::min(room.len()-1, x+1);
@@ -87,27 +87,27 @@ fn run_part_2_for_file(path: String) -> u64 {
     let value = helpers::read(File::open(path).unwrap()).unwrap();
     let seats: Vec<Vec<char>> = value.iter().map(|l| l.chars().collect()).collect();
 
-    let mut opt_next_seats = has_new_seats(seats);
+    let mut opt_next_seats = has_new_seats(&seats);
     let mut res = 0;
     while let Some(next_seats) = opt_next_seats {
-        res = count_seats(next_seats.clone());
+        res = count_seats(&next_seats);
         // println!("__________");
         // for s in next_seats.iter() {
         //     println!("{}", s.iter().collect::<String>());
         // }
         // println!("__________");
-        opt_next_seats = has_new_seats_los(next_seats);
+        opt_next_seats = has_new_seats_los(&next_seats);
     }
 
 
     res
 }
 
-fn has_new_seats_los(seats: Vec<Vec<char>>) -> Option<Vec<Vec<char>>> /*(Vec<Vec<char>>, bool)*/ {
+fn has_new_seats_los(seats: &Vec<Vec<char>>) -> Option<Vec<Vec<char>>> /*(Vec<Vec<char>>, bool)*/ {
     let mut changed = false;
     let mut new_seats = seats.clone();
-    seats.clone().iter().enumerate().for_each(|(i, row)| row.iter().enumerate().for_each(|(j, col)| {
-        let next = get_next_seat2(*col, line_of_sight_occupied_seat(seats.clone(), i, j));
+    seats.iter().enumerate().for_each(|(i, row)| row.iter().enumerate().for_each(|(j, col)| {
+        let next = get_next_seat2(*col, line_of_sight_occupied_seat(seats, i, j));
         if next != *col {
             changed = true;
         }
@@ -130,7 +130,7 @@ fn get_next_seat2(seat: char, adjacent_occupied_seat: usize) -> char {
     }
 }
 
-fn line_of_sight_occupied_seat(room: Vec<Vec<char>>, x: usize, y: usize) -> usize {
+fn line_of_sight_occupied_seat(room: &Vec<Vec<char>>, x: usize, y: usize) -> usize {
     let min_x = if x == 0 { 0 } else { x-1 };
     let min_y = if y == 0 { 0 } else { y-1 };
     let max_x = cmp::min(room.len()-1, x+1);
@@ -202,8 +202,8 @@ mod tests {
             vec!['#', '#', '#'],
             vec!['#', '#', '#'],
         ];
-        assert_eq!(0, count_seats(empty));
-        assert_eq!(9, count_seats(full));
+        assert_eq!(0, count_seats(&empty));
+        assert_eq!(9, count_seats(&full));
     }
 
     #[test]
@@ -218,7 +218,7 @@ mod tests {
             vec!['#', '#', '#'],
             vec!['#', '#', '#'],
         ];
-        let res = has_new_seats(start);
+        let res = has_new_seats(&start);
         assert_eq!(Some(next), res);
     }
 
@@ -240,14 +240,14 @@ mod tests {
             vec!['#', 'L', '#'],
             vec!['#', '#', '#'],
         ];
-        assert_eq!(2, adjacent_occupied_seat(room.clone(), 0, 0));
-        assert_eq!(8, adjacent_occupied_seat(room, 1, 1));
+        assert_eq!(2, adjacent_occupied_seat(&room, 0, 0));
+        assert_eq!(8, adjacent_occupied_seat(&room, 1, 1));
         let room_2 = vec![
             vec!['#', '#', '#'],
             vec!['#', 'L', '#'],
             vec!['#', '.', 'L'],
         ];
-        assert_eq!(1, adjacent_occupied_seat(room_2, 2, 2));
+        assert_eq!(1, adjacent_occupied_seat(&room_2, 2, 2));
     }
 
     // ____________________
@@ -271,14 +271,14 @@ mod tests {
             vec!['#', 'L', '#'],
             vec!['#', '#', '#'],
         ];
-        assert_eq!(2, line_of_sight_occupied_seat(room.clone(), 0, 0));
-        assert_eq!(8, line_of_sight_occupied_seat(room, 1, 1));
+        assert_eq!(2, line_of_sight_occupied_seat(&room, 0, 0));
+        assert_eq!(8, line_of_sight_occupied_seat(&room, 1, 1));
         let room_2 = vec![
             vec!['#', '#', '#'],
             vec!['#', '.', 'L'],
             vec!['#', '.', 'L'],
         ];
-        assert_eq!(2, line_of_sight_occupied_seat(room_2, 2, 2));
+        assert_eq!(2, line_of_sight_occupied_seat(&room_2, 2, 2));
         let room_3 = vec![
             vec!['#', '#', '#', '.'],
             vec!['#', '.', 'L', '#'],
@@ -286,8 +286,8 @@ mod tests {
             vec!['#', '.', 'L', '#'],
             vec!['#', '.', 'L', '#'],
         ];
-        assert_eq!(5, line_of_sight_occupied_seat(room_3.clone(), 1, 2));
-        assert_eq!(3, line_of_sight_occupied_seat(room_3, 0, 1));
+        assert_eq!(5, line_of_sight_occupied_seat(&room_3, 1, 2));
+        assert_eq!(3, line_of_sight_occupied_seat(&room_3, 0, 1));
         let room_4 = vec![
             vec!['.', '.', '.', '.'],
             vec!['.', '.', '.', '.'],
@@ -295,8 +295,8 @@ mod tests {
             vec!['.', '.', '.', '.'],
             vec!['.', '.', '.', '.'],
         ];
-        assert_eq!(0, line_of_sight_occupied_seat(room_4.clone(), 3, 3));
-        assert_eq!(0, line_of_sight_occupied_seat(room_4, 0, 0));
+        assert_eq!(0, line_of_sight_occupied_seat(&room_4, 3, 3));
+        assert_eq!(0, line_of_sight_occupied_seat(&room_4, 0, 0));
 
         let no = vec![
             vec!['.','#','#','.','#','#','.',],
@@ -307,7 +307,7 @@ mod tests {
             vec!['#','.','#','.','#','.','#',],
             vec!['.','#','#','.','#','#','.',],
         ];
-        assert_eq!(0, line_of_sight_occupied_seat(no, 3, 3));
+        assert_eq!(0, line_of_sight_occupied_seat(&no, 3, 3));
         
         let pb = vec![
             vec!['#','.','#','#','.','#','#','.','#','#'],
@@ -322,6 +322,6 @@ mod tests {
             vec!['#','.','#','#','#','#','#','.','#','#'],
         ];
 
-        assert_eq!(3, line_of_sight_occupied_seat(pb, 1, 0));
+        assert_eq!(4, line_of_sight_occupied_seat(&pb, 1, 0));
     }
 }
